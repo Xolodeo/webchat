@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Комната чата {{ chat_name }}</title>
+    <style>
+        body {
+            background: linear-gradient(135deg, #f06, #4a90e2);
+            font-family: 'Courier New', monospace;
+            color: #fff;
+            margin: 0;
+            padding: 20px;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        h1 {
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px #000;
+        }
+        #chat-container {
+            background: rgba(0, 0, 0, 0.5);
+            border: 2px solid #fff;
+            padding: 20px;
+            border-radius: 0;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        #messages {
+            height: 300px;
+            overflow-y: auto;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            margin-bottom: 15px;
+            border: 1px solid #fff;
+        }
+        #message-input {
+            width: 75%;
+            padding: 12px;
+            border: 1px solid #fff;
+            background: transparent;
+            color: #fff;
+        }
+        #send-button, #delete-chat-button, #back-button {
+            background: #f06;
+            color: #fff;
+            padding: 12px 25px;
+            border: 2px solid #fff;
+            cursor: pointer;
+            margin-top: 10px;
+            text-transform: uppercase;
+        }
+        button:hover {
+            background: #4a90e2;
+        }
+    </style>
+    
+    
+
+</head>
+<body>
+    <h1>Диалог: {{ chat_name }}</h1>
+    <div id="chat-container">
+        <div id="messages"></div>
+        <input type="text" id="message-input" placeholder="Напишите что-нибудь...">
+        <button id="send-button">Отправить</button>
+    </div>
+    <button id="delete-chat-button">Удалить диалог</button>
+    <button id="back-button">Назад</button>
+
+    <script>
+        // Переменные чата
+        const chatName = "{{ chat_name }}";
+        const user = "{{ user }}";
+        const token = "{{ token }}";
+        const ws = new WebSocket(`ws://${location.host}/ws/${chatName}?token=${token}`);
+
+        // Открытие соединения
+        ws.onopen = function() {
+            console.log('Соединение установлено.');
+        };
+
+        // Получение сообщений
+        ws.onmessage = function(event) {
+            const messages = document.getElementById('messages');
+            const message = document.createElement('p');
+            message.textContent = event.data;
+            messages.appendChild(message);
+        };
+
+        // Закрытие соединения
+        ws.onclose = function() {
+            console.log('Соединение закрыто.');
+        };
+
+        // Отправка сообщения
+        document.getElementById('send-button').onclick = function() {
+            const input = document.getElementById('message-input');
+            ws.send(input.value);
+            input.value = '';
+        };
+
+        // Удаление диалога
+        document.getElementById('delete-chat-button').onclick = function() {
+            if (confirm('Вы уверены, что хотите удалить этот диалог?')) {
+                fetch(`/deletechat/${chatName}`, { method: 'POST' })
+                    .then(response => {
+                        if (response.redirected) {
+                            alert('Диалог удален.');
+                            window.location.href = response.url;
+                        } else {
+                            alert('Ошибка при удалении диалога.');
+                        }
+                    });
+            }
+        };
+
+        // Кнопка назад
+        document.getElementById('back-button').onclick = function() {
+            window.location.href = '/choose';
+        };
+    </script>
+</body>
+</html>

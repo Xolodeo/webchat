@@ -1,0 +1,11 @@
+fastapi
+uvicorn
+SQLAlchemy
+psycopg2-binary
+python-jose[cryptography]   # Для работы с JWT
+passlib[bcrypt]==1.7.4      # Для хеширования паролей
+jinja2                      # Для шаблонов
+odmantic
+python-multipart
+bcrypt==3.2.0
+itsdangerous

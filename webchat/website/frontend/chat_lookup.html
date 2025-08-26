@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Поиск чатов</title>
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            background: linear-gradient(135deg, #f06, #4a90e2);
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 50px;
+            margin: 0;
+            height: 100vh;
+            justify-content: center;
+        }
+        h1 {
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px #000;
+        }
+        form {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 35px;
+            border: 2px solid #fff;
+            width: 280px;
+            margin-bottom: 20px;
+        }
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 2px solid #fff;
+            background: transparent;
+            color: #fff;
+        }
+        button {
+            background-color: #f06;
+            color: #fff;
+            padding: 12px;
+            width: 100%;
+            border: 2px solid #fff;
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+        button:hover {
+            background-color: #4a90e2;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+            width: 100%;
+            max-width: 500px;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+        a {
+            text-decoration: none;
+            background-color: #f06;
+            color: #fff;
+            padding: 12px;
+            border: 2px solid #fff;
+            display: block;
+            text-align: center;
+            text-transform: uppercase;
+        }
+        a:hover {
+            background-color: #4a90e2;
+        }
+        #back-button {
+            background-color: #f06;
+            color: #fff;
+            padding: 12px 20px;
+            border: 2px solid #fff;
+            cursor: pointer;
+            margin-top: 20px;
+            text-transform: uppercase;
+        }
+        #back-button:hover {
+            background-color: #4a90e2;
+        }
+        .error {
+            color: #ff4d4d;
+            margin-bottom: 10px;
+        }
+    </style>
+    
+    
+</head>
+<body>
+    <h1>Поиск чатов</h1>
+    {% if error %}
+        <div class="error">{{ error }}</div>
+    {% endif %}
+    <form method="post" action="/chat_lookup">
+        <input type="text" name="query" placeholder="Название чата" value="{{ query if query else '' }}" minlength="6">
+        <button type="submit">Поиск</button>
+    </form>
+    <h2>Список чатов:</h2>
+    <ul>
+        {% for chat in chats %}
+        <li><a href="/chat/{{ chat['chat_name'] }}">{{ chat['chat_name'] }}</a></li>
+        {% endfor %}
+    </ul>
+
+    <!-- Кнопка Назад -->
+    <a href="/choose">
+        <button id="back-button">Назад</button>
+    </a>
+</body>
+</html>
+

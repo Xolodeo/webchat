@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Вход</title>
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            background: linear-gradient(135deg, #f06, #4a90e2);
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 50px;
+            margin: 0;
+            height: 100vh;
+            justify-content: center;
+        }
+        h1 {
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px #000;
+        }
+        form {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 35px;
+            border: 2px solid #fff;
+            width: 280px;
+        }
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 2px solid #fff;
+            background: transparent;
+            color: #fff;
+        }
+        button {
+            background-color: #f06;
+            color: #fff;
+            padding: 12px;
+            width: 100%;
+            border: 2px solid #fff;
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+        button:hover {
+            background-color: #4a90e2;
+        }
+        p {
+            margin-top: 20px;
+        }
+        a {
+            color: #fff;
+            text-decoration: underline;
+        }
+        a:hover {
+            color: #f06;
+        }
+    </style>
+    
+    
+</head>
+<body>
+    <h1>Вход</h1>
+    {% if error %}
+        <p style="color: red;">{{ error }}</p>
+    {% endif %}
+    <form method="post" action="/log_in">
+        <input type="email" name="email" placeholder="Email">
+        <input type="password" name="password" placeholder="Пароль">
+        <button type="submit">Войти</button>
+    </form>
+    <p>Нет аккаунта? <a href="/sign_up">Зарегистрироваться</a></p>
+</body>
+</html>
+

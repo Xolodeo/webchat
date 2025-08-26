@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Выбор действия</title>
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            background: linear-gradient(135deg, #f06, #4a90e2);
+            color: #fff;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0;
+            height: 100vh;
+            justify-content: center;
+        }
+        h1 {
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px #000;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            margin-bottom: 15px;
+        }
+        a {
+            text-decoration: none;
+            background-color: #f06;
+            color: #fff;
+            padding: 12px 30px;
+            border: 2px solid #fff;
+            display: inline-block;
+            text-transform: uppercase;
+        }
+        a:hover {
+            background-color: #4a90e2;
+        }
+    </style>
+    
+    
+</head>
+<body>
+    <h1>Добро пожаловать, {{ request.session.get('user') }}!</h1>
+    <ul>
+        <li><a href="/begin_chat">Создать новый чат</a></li>
+        <li><a href="/chat_lookup">Найти чат</a></li>
+        <li><a href="/logout">Выйти</a></li>
+    </ul>
+</body>
+</html>
+
